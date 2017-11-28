@@ -32,18 +32,18 @@ namespace AppleDoor
             int numberOfClusters = 10;
             int columnIndexOfAssignmentColumn = 3;
             int biggestCluster = 1;
-            int []numberOfMailsInEachCluster = new int[numberOfClusters];
+            int[] numberOfMailsInEachCluster = new int[numberOfClusters];
 
             //assign number of items present in each cluster bucket in the array
             for (int i = 0; i < (dataTable.Rows.Count); i++)
             {
-                numberOfMailsInEachCluster[ Convert.ToInt16( dataTable.Rows[i][columnIndexOfAssignmentColumn])]++;               
+                numberOfMailsInEachCluster[Convert.ToInt16(dataTable.Rows[i][columnIndexOfAssignmentColumn])]++;
             }
-            
+
             //find out biggest cluster apart from 0th cluster
-            for(int i=1;i< numberOfClusters;i++)
+            for (int i = 1; i < numberOfClusters; i++)
             {
-               if (numberOfMailsInEachCluster[biggestCluster] < numberOfMailsInEachCluster[i])
+                if (numberOfMailsInEachCluster[biggestCluster] < numberOfMailsInEachCluster[i])
                 {
                     biggestCluster = i;
                 }
@@ -52,8 +52,8 @@ namespace AppleDoor
 
             //count occurence of each sender
             Dictionary<string, int> dictionary = new Dictionary<string, int>();
-            
-            for (int i=0; i< dataTable.Rows.Count;  i++)
+
+            for (int i = 0; i < dataTable.Rows.Count; i++)
             {
                 if (Convert.ToInt16(dataTable.Rows[i][columnIndexOfAssignmentColumn]) == biggestCluster)
                 {
@@ -70,16 +70,16 @@ namespace AppleDoor
 
             //Suggest rules based on senders count
             OutlookRulesUtility.suggestRulesBasedOnCountOfSender(dictionary);
-           
+
         }
 
-  
+
         //export input and assigned cluster to excel for manual analysis
         public void ExportToExcel(DataTable dt)
         {
             if (dt.Rows.Count > 0)
             {
-               
+
                 //open file
                 StreamWriter wr = new StreamWriter(@"D:\RND\Outlook\AppleDoor\DownloadMobileNoExcel.xls");
 
@@ -120,6 +120,6 @@ namespace AppleDoor
             }
         }
 
-     
+
     }
 }

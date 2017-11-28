@@ -31,9 +31,9 @@ namespace AppleDoor
             return false;
         }
 
-        public static void suggestSimpleRulesBasedOnCountOfSender(Dictionary<string, int> dictionary)
+        public static void suggestRule(Dictionary<string, int> dictionary)
         {
-
+            Console.WriteLine("hi");
         }
 
         public static void suggestRulesBasedOnCountOfSender(Dictionary<string, int> dictionary)

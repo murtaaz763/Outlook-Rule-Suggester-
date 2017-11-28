@@ -10,6 +10,7 @@ using System.IO;
 using AppleDoor;
 using Newtonsoft.Json;
 using System.Data;
+using AppleDoor;
 
 
 namespace AppleDoor
@@ -41,8 +42,9 @@ namespace AppleDoor
                     OlDefaultFolders.olFolderInbox);
 
             items = inbox.Items;
-            items.ItemAdd +=
-                new Outlook.ItemsEvents_ItemAddEventHandler(OutlookRulesUtility.suggestRule);
+           // items.ItemAdd +=
+           //     new Outlook.ItemsEvents_ItemAddEventHandler(OutlookRulesUtility.suggestRule);
+            //    new Outlook.ItemsEvents_ItemAddEventHandler();
 
         }
 
