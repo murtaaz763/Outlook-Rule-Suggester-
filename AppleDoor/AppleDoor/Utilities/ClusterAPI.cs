@@ -38,7 +38,7 @@ namespace AppleDoor
 
         static void Main(string[] args)
         {
-      
+
         }
 
 
@@ -46,36 +46,46 @@ namespace AppleDoor
         {
 
             try
-            { 
-            //all the columns you want to pass on to the API to receive response from
-            string str = "Sender,Receiver,Subject,Default assignment";
-
-            //store all the column in array
-            columnNames = str.Split(',');
-
-            // Read each line of the file into a string array. Each element
-            // of the array is one line of the file.
-            string[] lines = System.IO.File.ReadAllLines(@"D:\RND\Outlook\AppleDoor\AppleDoor\listOfMailIDs.txt");
-
-            //store all the rows in array, pass values variable as parameter to API
-            values = new string[lines.Length, columnNames.Length];
-
-
-            int rowCount = 0;
-            foreach (string line in lines)
             {
-                string[] rows = line.Split('\t');
+                //all the columns you want to pass on to the API to receive response from
 
-                values[rowCount, 0] = rows[0];
-                values[rowCount, 2] = rows[2];
-                values[rowCount, 1] = rows[1];
-                values[rowCount, 3] = "0";
-                rowCount++;
-            }
+                string str = System.Configuration.ConfigurationSettings.AppSettings["SubjectNames"];
 
-            //invoke method to call AML API
-            InvokeRequestResponseService().Wait();
-            Thread.Sleep(2000);
+                //store all the column in array
+                columnNames = str.Split(',');
+
+                // Read each line of the file into a string array. Each element
+                // of the array is one line of the file.
+
+                string[] lines = System.IO.File.ReadAllLines(System.Configuration.ConfigurationSettings.AppSettings["Location"]);
+
+                //store all the rows in array, pass values variable as parameter to API
+                values = new string[lines.Length, columnNames.Length];
+
+
+                int rowCount = 0;
+                foreach (string line in lines)
+
+                {
+
+                    string[] rows = line.Split('\t');
+
+
+
+                    for (int i = 0; i < rows.Length; i++)
+                    {
+                        values[rowCount, i] = rows[i];
+
+
+                    }
+                    rowCount++;
+
+                }
+
+
+                //invoke method to call AML API
+                InvokeRequestResponseService().Wait();
+                Thread.Sleep(2000);
             }
             catch (Exception ex)
             {
@@ -93,7 +103,7 @@ namespace AppleDoor
             try
             {
                 var jsonLinq = JObject.Parse(json);
-                
+
                 int countOfRows = Convert.ToInt32(((Newtonsoft.Json.Linq.JContainer)jsonLinq["Results"]["output1"]["value"]["Values"]).Count);
 
                 if (jsonLinq != null)
@@ -103,25 +113,25 @@ namespace AppleDoor
                     dataTable.Columns.Add("Receiver", typeof(string));
                     dataTable.Columns.Add("Subject", typeof(string));
                     dataTable.Columns.Add("Assignments", typeof(int));
-                   
-                    for (int i =0; i< countOfRows; i++)
+
+                    for (int i = 0; i < countOfRows; i++)
                     {
                         DataRow newRow = dataTable.NewRow();
 
-                        newRow["Sender"]   = Convert.ToString(jsonLinq["Results"]["output1"]["value"]["Values"][i][0]);
-                        newRow["Subject"]  = Convert.ToString(jsonLinq["Results"]["output1"]["value"]["Values"][i][1]);
+                        newRow["Sender"] = Convert.ToString(jsonLinq["Results"]["output1"]["value"]["Values"][i][0]);
+                        newRow["Subject"] = Convert.ToString(jsonLinq["Results"]["output1"]["value"]["Values"][i][1]);
                         newRow["Receiver"] = Convert.ToString(jsonLinq["Results"]["output1"]["value"]["Values"][i][2]);
                         newRow["Assignments"] = Convert.ToInt32(jsonLinq["Results"]["output1"]["value"]["Values"][i][4]);
-                                                                           
+
                         dataTable.Rows.Add(newRow);
                     }
 
                 }
-                
+
             }
             catch (Exception ex)
             {
-             
+
             }
 
             //return response from the AML API along with Input parameters
@@ -214,7 +224,7 @@ namespace AppleDoor
             }
 
 
-            
+
 
 
         }
