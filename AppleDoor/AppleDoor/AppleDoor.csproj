@@ -167,12 +167,16 @@
   -->
   <ItemGroup>
     <Compile Include="Utilities\AnalyzeMailClusters.cs" />
+    <Compile Include="Utilities\AnalyzeMailClustersHelper.cs" />
     <Compile Include="Utilities\ClusterAPI.cs" />
+    <Compile Include="Utilities\ClusterAPIHelper.cs" />
     <Compile Include="Utilities\EmailUtility.cs" />
+    <Compile Include="Utilities\EmailUtilityHelper.cs" />
     <Compile Include="Utilities\OutlookRulesUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Utilities\OutlookRulesUtilityHelper.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

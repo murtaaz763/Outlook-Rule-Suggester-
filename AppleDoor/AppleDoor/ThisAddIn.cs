@@ -24,27 +24,27 @@ namespace AppleDoor
        
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+
         //    EmailUtility emailUtility = new EmailUtility();
         //    emailUtility.ScanAllMailItems();
           
-          ClusterAPI API = new ClusterAPI();
+         ClusterAPI API = new ClusterAPI();
 
-            DataTable dataTable= API.ReadTxtFromListOfMailIDs();
+         DataTable dataTable= API.ReadTxtFromListOfMailIDs();
+            
+         AnalyzeMailClusters analyzeMailClusters = new AnalyzeMailClusters();
 
+         analyzeMailClusters.analyseClusters(dataTable);
 
-            AnalyzeMailClusters analyzeMailClusters = new AnalyzeMailClusters();
+         outlookNameSpace = this.Application.GetNamespace("MAPI");
 
-            analyzeMailClusters.analyseClusters(dataTable);
+         inbox = outlookNameSpace.GetDefaultFolder(Microsoft.Office.Interop.Outlook.OlDefaultFolders.olFolderInbox);
 
-              outlookNameSpace = this.Application.GetNamespace("MAPI");
-            inbox = outlookNameSpace.GetDefaultFolder(
-                    Microsoft.Office.Interop.Outlook.
-                    OlDefaultFolders.olFolderInbox);
+         items = inbox.Items;
 
-            items = inbox.Items;
-           // items.ItemAdd +=
-           //     new Outlook.ItemsEvents_ItemAddEventHandler(OutlookRulesUtility.suggestRule);
-            //    new Outlook.ItemsEvents_ItemAddEventHandler();
+      // items.ItemAdd += new Outlook.ItemsEvents_ItemAddEventHandler(OutlookRulesUtility.suggestRule);
+
+      // new Outlook.ItemsEvents_ItemAddEventHandler();
 
         }
 

@@ -13,24 +13,12 @@ using System.Xml.Linq;
 using System.Diagnostics;
 using System.IO;
 using AppleDoor;
+using AppleDoor.Utilities;
 
 namespace AppleDoor
 {
     class OutlookRulesUtility
     {
-
-        public static bool RuleExist(string ruleName, Outlook.Rules rules)
-        {
-            foreach (Outlook.Rule rule in rules)
-            {
-                if (rule.Name == ruleName)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public static void suggestRule(Dictionary<string, int> dictionary)
         {
             Console.WriteLine("hi");
@@ -63,7 +51,7 @@ namespace AppleDoor
                 store = session.DefaultStore;
                 rules = store.GetRules();
 
-                if (!RuleExist(ruleName, rules))
+                if (!OutlookRulesUtilityHelper.RuleExist(ruleName, rules))
                 {
                     rootFolder = store.GetRootFolder();
                     // destinationFolder = GetFolder(rootFolder.FolderPath + "\\Orders", this);
